@@ -1,65 +1,64 @@
-# CLAUDE.md - AI Assistant Guide for HTML5 Template
+# AGENTS.md - AI Coding Agent Guide
 
 ## Project Overview
 
-This is a static HTML5 website template designed for building modern, responsive websites. It provides a boilerplate structure with pre-configured CSS, JavaScript, and Apache server settings optimized for performance and security.
+Static HTML5 website template with SCSS, jQuery, and Apache configuration. No build system configured - manual compilation required.
 
 ## Directory Structure
 
 ```
 html5-template/
 ├── css/
-│   ├── grid.css           # Bootstrap Grid v5.2.0 (minified)
-│   ├── normalize.min.css  # Normalize.css for cross-browser consistency
+│   ├── grid.css           # Bootstrap Grid v5.2.0 (DO NOT EDIT)
+│   ├── normalize.min.css  # Normalize.css (DO NOT EDIT)
 │   ├── normalize.scss     # Normalize SCSS source
-│   ├── style.scss         # Main stylesheet source (SCSS)
-│   └── style.min.css      # Compiled/minified CSS output
+│   ├── style.scss         # Main stylesheet (EDIT THIS)
+│   └── style.min.css      # Compiled output
 ├── js/
-│   ├── main.js            # Main JavaScript source (development)
-│   ├── main.prod.js       # Minified production JavaScript
-│   ├── plugins.js         # Console polyfill and helper plugins
-│   └── owlcarousel/       # Owl Carousel library files
-│       ├── owl.carousel.min.js
-│       ├── owl.carousel.min.css
-│       └── owl.theme.default.min.css
-├── index.html             # Main HTML entry point
-├── 404.html               # Custom 404 error page
-├── .htaccess              # Apache server configuration
-├── site.webmanifest       # PWA manifest file
-├── browserconfig.xml      # Windows tile configuration
-├── robots.txt             # Search engine crawling rules
-├── favicon.ico            # Browser favicon
-├── icon.png               # PWA icon (192x192)
-├── tile.png               # Windows tile icon
-└── tile-wide.png          # Windows wide tile icon
+│   ├── main.js            # Development source (EDIT THIS)
+│   ├── main.prod.js       # Minified production
+│   ├── plugins.js         # Console polyfill (DO NOT EDIT)
+│   └── owlcarousel/       # Owl Carousel (DO NOT EDIT)
+├── index.html             # Main entry point
+├── 404.html               # Error page
+├── .htaccess              # Apache configuration
+└── site.webmanifest       # PWA manifest
+```
+
+## Build Commands
+
+```bash
+# No package.json - use external tools
+
+# SCSS compilation (use your preferred tool)
+sass css/style.scss css/style.min.css --style=compressed
+
+# JavaScript minification (use your preferred tool)
+terser js/main.js -o js/main.prod.js -c -m
+
+# Local server (Python)
+python -m http.server 8000
+
+# Local server (PHP)
+php -S localhost:8000
 ```
 
 ## Technology Stack
 
-- **HTML5**: Semantic markup with Open Graph meta tags
-- **CSS**: SCSS preprocessor with Bootstrap Grid 5.2.0
-- **JavaScript**: jQuery 3.6.0 + Owl Carousel
-- **Server**: Apache with comprehensive .htaccess configuration
-- **Polyfills**: Cloudflare ES5/ES6/ES7 polyfill service
+| Layer | Technology |
+|-------|------------|
+| Markup | HTML5 with semantic elements |
+| Styles | SCSS, Bootstrap Grid 5.2.0 |
+| Scripts | jQuery 3.6.0, Owl Carousel |
+| Server | Apache (.htaccess) |
+| CDN | Cloudflare Polyfill, Google CDN |
 
-## Key Files and Their Purpose
+## Code Style
 
-### HTML Files
+### SCSS Guidelines
 
-- `index.html`: Main template with French language (`lang="fr"`). Contains basic semantic structure (`<header>`, `<main>`, `<footer>`) and loads all CSS/JS dependencies.
-- `404.html`: Self-contained error page with embedded styles.
-
-### Stylesheets
-
-- `css/style.scss`: Primary stylesheet containing:
-  - SCSS variables for colors, fonts, and sizing
-  - Typography system with responsive font sizes
-  - Form styling templates (commented, ready to enable)
-  - Lazy loading animation support for LiteSpeed
-  - Responsive breakpoints at 992px, 767px, and 425px
-
-**Color Variables:**
 ```scss
+// Use defined variables - never hardcode colors
 $black: #000;
 $white: #fff;
 $grey: #707070;
@@ -68,150 +67,137 @@ $bleu-clair: #0000ff;
 $violet-fonce: #28004a;
 $violet-clair: #660099;
 $orange: #ff6600;
-```
 
-**Font Variables:**
-```scss
+// Font variables
 $title-font: 'Chewy', cursive;
 $regular-font: 'Montserrat', sans-serif;
-$extraLarge: 3.75rem;  // ~75px at 20px base
+
+// Size variables (base: 20px)
+$extraLarge: 3.75rem;  // ~75px
 $large: 2.13rem;       // ~42.6px
 $medium: 1.6rem;       // ~32px
+
+// Always use rem units (1rem = 20px)
+.element {
+    padding: 1rem;      // 20px
+    font-size: 0.8rem;  // 16px
+}
+
+// Add responsive styles at bottom in media queries
+@media screen and (max-width: 992px) { }
+@media screen and (max-width: 767px) { }
+@media screen and (max-width: 425px) { }
 ```
 
-### JavaScript Files
+### JavaScript Guidelines
 
-- `js/main.js`: Development source with:
-  - Owl Carousel initialization for `.owl-carousel` elements
-  - Mobile menu burger toggle functionality
-  - Commented custom select input handler
+```javascript
+// Wrap in IIFE with jQuery alias
+(function ($) {
+    $(document).ready(function () {
+        // All code inside document.ready
+        
+        // Use arrow functions for callbacks
+        $('.element').click(e => {
+            e.preventDefault();
+        });
+        
+        // Check element exists before initializing
+        if ($('.owl-carousel').length) {
+            $('.owl-carousel').owlCarousel({ /* options */ });
+        }
+    });
+})(jQuery);
+```
 
-- `js/main.prod.js`: Minified production version of main.js
-- `js/plugins.js`: Console method polyfill for older browsers
+### HTML Guidelines
 
-### Server Configuration
+```html
+<!-- Use semantic HTML5 elements -->
+<header></header>
+<main></main>
+<footer></footer>
 
-`.htaccess` provides:
-- CORS headers (commented, configurable)
-- IE document mode forcing
-- UTF-8 character encoding
-- HTTPS redirection (commented, ready to enable)
-- Clickjacking protection via X-Frame-Options
-- Content Security Policy template
-- Directory listing prevention
-- Hidden file protection
-- GZIP/Brotli compression
-- Cache expiration rules (1 year for CSS/JS, 1 month for images)
-- ETags removal for better caching
+<!-- Bootstrap Grid for layout -->
+<div class="container">
+    <div class="row">
+        <div class="col-12 col-md-6 col-lg-4">Content</div>
+    </div>
+</div>
 
-## Development Workflow
+<!-- Script loading: defer for dependencies, async for independent -->
+<script defer src="jquery.min.js"></script>
+<script defer src="main.prod.js"></script>
+<script async src="plugins.js"></script>
+```
 
-### Editing Styles
+## Naming Conventions
 
-1. Edit `css/style.scss` for style changes
-2. Compile SCSS to CSS and minify to `css/style.min.css`
-3. No build tool is configured - use your preferred SCSS compiler
+| Type | Convention | Example |
+|------|------------|---------|
+| CSS classes | kebab-case | `.mobile-menu`, `.nav-item` |
+| SCSS variables | kebab-case with $ | `$bleu-fonce`, `$title-font` |
+| JS functions | camelCase | `closeAllSelect()` |
+| Files | kebab-case | `style.min.css`, `main.prod.js` |
 
-### Editing JavaScript
+## Important Rules
 
-1. Edit `js/main.js` for JavaScript changes
-2. Minify to `js/main.prod.js` for production
-3. Production file is loaded in `index.html`
+### ALWAYS
 
-### Adding New Pages
-
-1. Copy `index.html` as a starting point
-2. Update `<title>`, meta description, and Open Graph tags
-3. Add content within `<main>` element
-
-## Important Conventions
-
-### CSS Conventions
-
-- Base font size is 20px (`html { font-size: 20px !important; }`)
-- Use rem units for sizing (relative to 20px base)
-- CSS custom property: `--header-height: 80px`
-- Smooth scrolling is enabled globally
-- Text rendering optimized with `geometricPrecision` and font smoothing
-
-### JavaScript Conventions
-
-- jQuery is loaded from Google CDN with `defer`
-- Main scripts use `defer` for non-blocking load
-- Plugins use `async` for independent loading
-- Wrap code in IIFE with jQuery: `(function ($) { ... })(jQuery);`
-- Wait for DOM ready: `$(document).ready(function () { ... });`
-
-### HTML Conventions
-
+- Edit `css/style.scss` for styles (never `style.min.css`)
+- Edit `js/main.js` for scripts (never `main.prod.js`)
+- Use existing SCSS variables for colors and fonts
+- Use rem units (base 20px) for sizing
+- Use Bootstrap Grid classes for layout
+- Keep scripts inside `$(document).ready()`
 - Use semantic HTML5 elements
-- Preload critical CSS with `preload` attribute
-- Place scripts at end of `<body>`
-- Include Open Graph meta tags for social sharing
-- Default language is French (`lang="fr"`)
+- Include Open Graph meta tags on new pages
+- Follow mobile-first responsive approach
+
+### NEVER
+
+- Edit third-party files: `grid.css`, `normalize.min.css`, `owlcarousel/*`, `plugins.js`
+- Hardcode colors - use SCSS variables
+- Use px units - use rem (1rem = 20px)
+- Put scripts outside IIFE/document.ready
+- Remove `defer`/`async` from script tags
+- Change `lang="fr"` without explicit request
+
+## CSS Custom Properties
+
+```css
+:root {
+    --header-height: 80px;
+}
+```
+
+## File Editing Workflow
+
+### Styles
+1. Edit `css/style.scss`
+2. Compile to `css/style.min.css`
+3. Test in browser
+
+### JavaScript
+1. Edit `js/main.js`
+2. Minify to `js/main.prod.js`
+3. Test in browser
+
+### New Pages
+1. Copy `index.html`
+2. Update `<title>` and meta tags
+3. Add content in `<main>`
+
+## Security (Cursor Rules)
+
+When generating new code:
+1. Run security scan on new first-party code
+2. Fix any security issues found
+3. Rescan until no issues remain
 
 ## External Dependencies
 
-All loaded via CDN:
-- **Polyfill.io** (Cloudflare): ES5/ES6/ES7 features
-- **jQuery 3.6.0**: Google CDN
+- **jQuery 3.6.0**: Google CDN (defer)
+- **Polyfill.io**: Cloudflare CDN (defer)
 - **Owl Carousel**: Local files in `js/owlcarousel/`
-
-## PWA Support
-
-The template includes PWA basics:
-- `site.webmanifest`: App manifest with icon and theme color (#fafafa)
-- `icon.png`: 192x192 PWA icon
-- Apple touch icon configured
-- Theme color meta tag
-
-## Security Headers (via .htaccess)
-
-Enabled by default:
-- `X-UA-Compatible: IE=edge`
-- `X-Content-Type-Options: nosniff`
-
-Available (commented):
-- `X-Frame-Options: DENY`
-- `Content-Security-Policy`
-- `Strict-Transport-Security`
-- `X-XSS-Protection`
-- `Referrer-Policy`
-
-## Common Tasks for AI Assistants
-
-### When modifying styles:
-1. Edit `css/style.scss`
-2. Follow existing variable naming patterns
-3. Use the defined color and font variables
-4. Add responsive styles in the media query sections at bottom
-
-### When modifying JavaScript:
-1. Edit `js/main.js`
-2. Follow jQuery patterns with `$` alias
-3. Keep code within the document.ready handler
-4. Remember to minify for production
-
-### When adding components:
-1. Use Bootstrap Grid classes for layout (`container`, `row`, `col-*`)
-2. Use existing typography classes (`.h1`-`.h6`)
-3. Follow mobile-first responsive approach
-
-### When configuring server:
-1. Uncomment relevant sections in `.htaccess`
-2. Test security headers with online validators
-3. Adjust cache durations as needed
-
-## Files to Never Edit
-
-- `css/grid.css` - Bootstrap Grid (use CDN or update the whole file)
-- `css/normalize.min.css` - Third-party library
-- `js/owlcarousel/*` - Third-party library
-- `js/plugins.js` - Polyfill only, rarely needs changes
-
-## Notes
-
-- No package.json or build system is configured
-- SCSS compilation must be done manually or with external tools
-- The template targets modern browsers with polyfill fallback
-- Apache server is assumed (`.htaccess` configuration)
+- **Bootstrap Grid 5.2.0**: Local `css/grid.css`
