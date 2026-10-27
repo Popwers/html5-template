@@ -182,9 +182,9 @@ AddDefaultCharset utf-8
 # https://blogs.msdn.microsoft.com/ieinternals/2010/03/30/combating-clickjacking-with-x-frame-options/
 # https://www.owasp.org/index.php/Clickjacking
 
-# <IfModule mod_headers.c>
-#     Header always set X-Frame-Options "DENY" "expr=%{CONTENT_TYPE} =~ m#text/html#i"
-# </IfModule>
+<IfModule mod_headers.c>
+    Header always set X-Frame-Options "DENY" "expr=%{CONTENT_TYPE} =~ m#text/html#i"
+</IfModule>
 
 # ----------------------------------------------------------------------
 # | Content Security Policy (CSP)                                      |
@@ -261,10 +261,13 @@ AddDefaultCharset utf-8
 # https://www.html5rocks.com/en/tutorials/security/content-security-policy/
 # https://www.w3.org/TR/CSP/
 
-# <IfModule mod_headers.c>
-#     #                                   (1)                 (2)              (3)                 (4)                     (5)                         (6)
-#     Header always set Content-Security-Policy "default-src 'self'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests" "expr=%{CONTENT_TYPE} =~ m#text\/(html|javascript)|application\/pdf|xml#i"
-# </IfModule>
+# The template loads jQuery from ajax.googleapis.com and the polyfill from
+# cdnjs.cloudflare.com, and 404.html carries an inline `<style>`. Add every new
+# third-party origin here before the page uses it.
+
+<IfModule mod_headers.c>
+    Header always set Content-Security-Policy "default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com https://ajax.googleapis.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; object-src 'none'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests" "expr=%{CONTENT_TYPE} =~ m#text\/(html|javascript)|application\/pdf|xml#i"
+</IfModule>
 
 # ----------------------------------------------------------------------
 # | File access                                                        |
@@ -279,6 +282,10 @@ AddDefaultCharset utf-8
 <IfModule mod_autoindex.c>
     Options -Indexes
 </IfModule>
+
+# Serve the custom error page for missing files.
+
+ErrorDocument 404 /404.html
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -450,10 +457,22 @@ AddDefaultCharset utf-8
 # https://scotthelme.co.uk/a-new-security-header-referrer-policy/
 # https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Referrer-Policy
 
-# <IfModule mod_headers.c>
-#     #                                                             (1)
-#     Header always set Referrer-Policy "strict-origin-when-cross-origin" "expr=%{CONTENT_TYPE} =~ m#text\/(css|html|javascript)|application\/pdf|xml#i"
-# </IfModule>
+<IfModule mod_headers.c>
+    Header always set Referrer-Policy "strict-origin-when-cross-origin" "expr=%{CONTENT_TYPE} =~ m#text\/(css|html|javascript)|application\/pdf|xml#i"
+</IfModule>
+
+# ----------------------------------------------------------------------
+# | Permissions Policy                                                 |
+# ----------------------------------------------------------------------
+
+# Turn off browser features the site does not use. Allow one here before a page
+# needs it (for example `geolocation=(self)`).
+#
+# https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Permissions-Policy
+
+<IfModule mod_headers.c>
+    Header always set Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=(), usb=()" "expr=%{CONTENT_TYPE} =~ m#text/html#i"
+</IfModule>
 
 # ######################################################################
 # # WEB PERFORMANCE                                                    #
