@@ -18,8 +18,12 @@ js/plugins.js           console polyfill. Vendored.
 js/owlcarousel/         Owl Carousel. Vendored.
 index.html              main page
 404.html                error page
-.htaccess               Apache Server Configs v4.0.0
+.htaccess               Apache Server Configs v4.0.0, security headers on
+robots.txt              crawler rules, points to the sitemap
+sitemap.xml             one <url> per page
 site.webmanifest        PWA manifest
+Dockerfile              Apache image for Coolify
+docker/httpd.conf       Apache settings the image appends
 ```
 
 ## What the page loads
@@ -37,7 +41,24 @@ site.webmanifest        PWA manifest
 | `js/plugins.js` | `async` |
 | `js/main.prod.js` | `defer` |
 
-`404.html` is `lang="en"` and uses inline CSS. `site.webmanifest` and `icon.png` are the PWA bits.
+`404.html` is `lang="en"` and uses inline CSS. `.htaccess` serves it for missing files. `site.webmanifest` and `icon.png` are the PWA bits.
+
+## New site checklist
+
+`https://example.com` is a placeholder. Replace it with the real origin in `index.html` (canonical and `og:url`), `sitemap.xml`, and `robots.txt`. Add each new page to `sitemap.xml` with its own canonical.
+
+## Headers
+
+`.htaccess` sets `X-Content-Type-Options`, `X-Frame-Options`, `Referrer-Policy`, `Permissions-Policy`, and a Content-Security-Policy. The CSP allows `cdnjs.cloudflare.com` and `ajax.googleapis.com` scripts only. Add an origin there before the page loads anything from it. HSTS is left to Cloudflare: keep it commented out here.
+
+## Docker
+
+The image serves the site with Apache so `.htaccess` applies. It drops the SCSS and JS sources, runs as `www-data` on port 8080, and checks health on `http://127.0.0.1:8080/`.
+
+```bash
+docker build -t site .
+docker run --rm -p 8080:8080 site
+```
 
 ## Commands
 
