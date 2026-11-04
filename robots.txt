@@ -4,4 +4,14 @@
 User-agent: *
 Disallow:
 
+# AI training and SEO-tool crawlers that send no visitor back.
+User-agent: Bytespider
+User-agent: CCBot
+User-agent: meta-externalagent
+User-agent: Reflectionbot
+User-agent: Barkrowler
+User-agent: SERankingBacklinksBot
+User-agent: AwarioBot
+Disallow: /
+
 Sitemap: https://example.com/sitemap.xml
