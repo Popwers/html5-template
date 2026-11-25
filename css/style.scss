@@ -51,7 +51,7 @@ $shadow: 0px 0px 0px 1px rgba(165, 165, 165, 0.04),
 
 html {
 	font-size: 20px !important;
-	scroll-padding-top: var (--header-height);
+	scroll-padding-top: var(--header-height);
 	overscroll-behavior: none;
 	scroll-behavior: smooth;
 }
