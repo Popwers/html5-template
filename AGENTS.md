@@ -35,7 +35,6 @@ docker/httpd.conf       Apache settings the image appends
 | `css/grid.css` | stylesheet |
 | `css/normalize.min.css` | stylesheet |
 | `css/style.min.css` | stylesheet |
-| Cloudflare polyfill 4.8.0 | CDN, `defer` |
 | jQuery 3.6.0 from Google CDN | `defer` |
 | `js/owlcarousel/owl.carousel.min.js` | `defer` |
 | `js/plugins.js` | `async` |
@@ -49,7 +48,7 @@ docker/httpd.conf       Apache settings the image appends
 
 ## Headers
 
-`.htaccess` sets `X-Content-Type-Options`, `X-Frame-Options`, `Referrer-Policy`, `Permissions-Policy`, and a Content-Security-Policy. The CSP allows `cdnjs.cloudflare.com` and `ajax.googleapis.com` scripts only. Add an origin there before the page loads anything from it. HSTS is left to Cloudflare: keep it commented out here.
+`.htaccess` sets `X-Content-Type-Options`, `X-Frame-Options`, `Referrer-Policy`, `Permissions-Policy`, and a Content-Security-Policy. The CSP allows `ajax.googleapis.com` scripts only. Add an origin there before the page loads anything from it. HSTS is left to Cloudflare: keep it commented out here.
 
 ## Docker
 

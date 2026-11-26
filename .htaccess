@@ -261,12 +261,11 @@ AddDefaultCharset utf-8
 # https://www.html5rocks.com/en/tutorials/security/content-security-policy/
 # https://www.w3.org/TR/CSP/
 
-# The template loads jQuery from ajax.googleapis.com and the polyfill from
-# cdnjs.cloudflare.com, and 404.html carries an inline `<style>`. Add every new
-# third-party origin here before the page uses it.
+# The template loads jQuery from ajax.googleapis.com, and 404.html carries an
+# inline `<style>`. Add every new third-party origin here before the page uses it.
 
 <IfModule mod_headers.c>
-    Header always set Content-Security-Policy "default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com https://ajax.googleapis.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; object-src 'none'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests" "expr=%{CONTENT_TYPE} =~ m#text\/(html|javascript)|application\/pdf|xml#i"
+    Header always set Content-Security-Policy "default-src 'self'; script-src 'self' https://ajax.googleapis.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; object-src 'none'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests" "expr=%{CONTENT_TYPE} =~ m#text\/(html|javascript)|application\/pdf|xml#i"
 </IfModule>
 
 # ----------------------------------------------------------------------
