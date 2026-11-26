@@ -5,6 +5,7 @@
 		<title></title>
 		<meta name="description" content="" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="text-scale" content="scale" />
 		<link rel="canonical" href="https://example.com/" />
 
 		<meta property="og:title" content="" />
@@ -15,9 +16,9 @@
 		<link rel="manifest" href="site.webmanifest" />
 		<link rel="apple-touch-icon" href="icon.png" />
 
-		<link rel="stylesheet" preload href="css/grid.css" />
-		<link rel="stylesheet" preload href="css/normalize.min.css" />
-		<link rel="stylesheet" preload href="css/style.min.css" />
+		<link rel="stylesheet" href="css/grid.css" />
+		<link rel="stylesheet" href="css/normalize.min.css" />
+		<link rel="stylesheet" href="css/style.min.css" />
 
 		<meta name="theme-color" content="#fafafa" />
 	</head>
@@ -29,8 +30,13 @@
 
 		<footer></footer>
 
-		<script defer src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?version=4.8.0&features=es5%2Ces6%2Ces7%2Cdefault"></script>
-		<script defer src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+		<script
+			defer
+			src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+			integrity="sha384-vtXRMe3mGCbOeY7l30aIg8H9p3GdeSe4IFlP6G8JMa7o7lXvnz3GFKzPxzJdPfGK"
+			crossorigin="anonymous"
+			referrerpolicy="no-referrer"
+		></script>
 		<script defer src="js/owlcarousel/owl.carousel.min.js"></script>
 		<script async src="js/plugins.js"></script>
 		<script defer src="js/main.prod.js"></script>

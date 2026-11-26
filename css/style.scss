@@ -50,10 +50,15 @@ $shadow: 0px 0px 0px 1px rgba(165, 165, 165, 0.04),
 }
 
 html {
-	font-size: 20px !important;
-	scroll-padding-top: var (--header-height);
+	font-size: 125% !important;
+	scroll-padding-top: var(--header-height);
 	overscroll-behavior: none;
-	scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+	html {
+		scroll-behavior: smooth;
+	}
 }
 
 html,
