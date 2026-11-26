@@ -53,7 +53,12 @@ html {
 	font-size: 125% !important;
 	scroll-padding-top: var(--header-height);
 	overscroll-behavior: none;
-	scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+	html {
+		scroll-behavior: smooth;
+	}
 }
 
 html,
